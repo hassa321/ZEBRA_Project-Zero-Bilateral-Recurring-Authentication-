@@ -1,4 +1,5 @@
 .DS_Store
 zebra_web/__pycache__/
-venv/
+**/venv/
+**/__pycache__/
 *.pyc
