@@ -4,25 +4,6 @@
 <head>
     <title>ZEBRA - AppleWatch</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <!-- <script type=text/javascript>
-        $(function() {
-            $('#btnLogin').click(function() {
-        
-                $.ajax({
-                    url: '/login',
-                    data: $('form').serialize(),
-                    type: 'POST',
-                    success: function(response) {
-                        console.log(response);
-                    },
-                    error: function(error) {
-                        console.log(error);
-                    }
-                });
-            });
-        });
-    </script> -->
 </head>
  
 <body>
@@ -41,7 +22,7 @@
  
         <div class="jumbotron">
             <h1>ZEBRA App</h1>
-            <form class="form-signin" action="login">
+            <form class="form-signin" action="login" method="POST">
             
                 <label for="inputUserName" class="sr-only">User Name</label>
                 <input type="text" name="inputUserName" id="inputUserName" class="form-control" placeholder="User name" required>    
