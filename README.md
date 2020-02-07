@@ -4,7 +4,7 @@ Zero Effort Continuous Authentication Implementation
 ## References
 ---
 
-### Week 1 (Feb 7th, 20202)
+### Week 1 (Feb 7th, 2020)
 
 #### Flask Installation
 1. https://flask.palletsprojects.com/en/1.1.x/installation/#installation
