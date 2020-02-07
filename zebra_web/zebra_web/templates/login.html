@@ -5,7 +5,7 @@
     <title>ZEBRA - AppleWatch</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script type=text/javascript>
+    <!-- <script type=text/javascript>
         $(function() {
             $('#btnLogin').click(function() {
         
@@ -22,7 +22,7 @@
                 });
             });
         });
-    </script>
+    </script> -->
 </head>
  
 <body>
@@ -41,17 +41,17 @@
  
         <div class="jumbotron">
             <h1>ZEBRA App</h1>
-            <form class="form-signin">
+            <form class="form-signin" action="login">
             
-            <label for="inputUserName" class="sr-only">Password</label>
-            <input type="password" name="inputUserName" id="inputUserName" class="form-control" placeholder="User name" required>    
+                <label for="inputUserName" class="sr-only">User Name</label>
+                <input type="text" name="inputUserName" id="inputUserName" class="form-control" placeholder="User name" required>    
 
-            <label for="inputPassword" class="sr-only">Password</label>
-            <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" required>
-             
-            <button id="btnLogin" class="btn btn-lg btn-primary btn-block" type="button">Login</button>
-          </form>
-          </div>
+                <label for="inputPassword" class="sr-only">Password</label>
+                <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" required>
+                
+                <button id="btnLogin" class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+            </form>
+        </div>
   
     </div>
 </body>

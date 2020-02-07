@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, json
+from flask import Flask, render_template, request, json, flash
 app = Flask(__name__)
 
 @app.route("/")
@@ -13,17 +13,16 @@ def showLogin():
 def main():
     return render_template('main.html')
 
-@app.route('/login', methods=['POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    _userName = request.form['inputUserName']
-    _password = request.form['inputPassword']
- 
-    if _userName == 'admin' and _password == 'password':
-        # return main()
-        return json.dumps({'html':'<span>Credentials match !!</span>'})
-    else:
-        # flash("wrong password!!")
-        return json.dumps({'html':'<span>Wrong credentials</span>'})
+    error = None
+    if request.method == 'POST':
+        print ("fdgd")
+        if request.form['inputUserName'] != 'admin' or request.form['inputPassword'] != 'password':
+            error = 'Invalid Credentials. Please try again.'
+        else:
+            return redirect(url_for('main'))
+    return render_template('login.html', error=error)
 
 if __name__ == "__main__":
     app.run()
