@@ -4,12 +4,22 @@ Zero Effort Continuous Authentication Implementation
 ## References
 ---
 
-### Folder Structure for Flask apps
+### Week 1 (Feb 7th, 20202)
+
+#### Flask Installation
+1. https://flask.palletsprojects.com/en/1.1.x/installation/#installation
+2. https://flask.palletsprojects.com/en/1.1.x/tutorial/factory/
+
+#### Folder Structure
 
 1. https://exploreflask.com/en/latest/organizing.html
 2. https://stackoverflow.com/questions/14415500/common-folder-file-structure-in-flask-app 
 3. https://flask.palletsprojects.com/en/1.1.x/tutorial/layout/
-4. https://flask.palletsprojects.com/en/1.1.x/tutorial/factory/
+4. https://stackoverflow.com/questions/14415500/common-folder-file-structure-in-flask-app
 
-### Login page code inspiration from
+#### Login page code inspiration
 1. https://code.tutsplus.com/tutorials/creating-a-web-app-from-scratch-using-python-flask-and-mysql--cms-22972
+2. https://realpython.com/introduction-to-flask-part-2-creating-a-login-page/
+3. https://flask.palletsprojects.com/en/1.1.x/patterns/flashing/
+
+### Week 2 (Feb 14th, 2020)
