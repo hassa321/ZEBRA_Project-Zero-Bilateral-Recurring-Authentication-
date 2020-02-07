@@ -1,0 +1,6 @@
+.DS_Store
+zebra_web/__pycache__/
+**/venv/
+**/__pycache__/
+*.pyc
+**/instance/
