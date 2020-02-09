@@ -8,10 +8,7 @@
 </head>
 
 <body>
-
-
-
-    <div class="container" >
+<div class="container" >
   
         <div class="header">
             <nav>
@@ -35,10 +32,33 @@
         </div>
     </div>
 
+
+
 <script>
 $( "body" ).mousemove(function( e ) {
-  var pageCoords = "( " + e.pageX + ", " + e.pageY + " )";
+    //when mouse moved recieve coordinates and send to server to be proccessed
+  var mouseCoords = {
+        'mouseX': e.pageX,
+        'mouseY': e.pageY
+    };
+    var json2 = JSON.stringify(mouseCoords);
+    //send mouse data using post call
+    $.ajax({
+        type: "POST",   
+        url: '/main'
+        data: $json2
+        dataType: 'json',
+        success: function(data){      
+            
+        
+        }
+   }).fail(function() {
+            
+   });
+
+  "( " + e.pageX + ", " + e.pageY + " )";
   console.log(e.pageX,e.pageY);
+    
 
 });
 </script>
