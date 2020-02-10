@@ -20,8 +20,10 @@ def login():
 @app.route('/main')
 def main():
     if request.method == 'POST':
-       #mouse data sent over 
+       #mouse data sent over
+       #Do Something Here 
        data=request.json
+
        
     else:
         return render_template('main.html')

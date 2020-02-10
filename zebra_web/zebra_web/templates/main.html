@@ -24,28 +24,33 @@
         
         <div class="jumbotron">
             <h1>DUMMY TEXT</h1>
-            <p>blah blah blah</p>
-            <p>blah blah blah</p>
-            <p>blah blah blah</p>
-            <p>blah blah blah</p>
-            </p>
-        </div>
+             <div class="header">
+            <h4> Mouse Movements(X,Y) with Timestamps (Unix)<h4>
+                <div  id="mouseMovement">Hello World! </div>
+            </div>
+         
+      
+
     </div>
 
 
 
 <script>
-var prevX,prevY=50;
+var prevX,prevY=50; 
+var testVar;
 $( "body" ).mousemove(function( e ) {
     //when mouse moved, recieve coordinates, calculate difference vector,time and send to server to be proccessed
     var mouseCoords = {
-        'mouseX': e.pageX,
-        'mouseY': e.pageY,
+        'X': e.pageX-prevX,
+        'Y': e.pageY-prevY,
         'timestamp': Date.now()
     };
-   
+  
+    if(mouseCoords.X==0 && mouseCoords.Y==0){
+    }else{
+
     var jsonMouseData = JSON.stringify(mouseCoords);
-    //send mouse data using post call
+    //Send mouse data using post call
     $.ajax({ 
         method: "POST", 
         url: "/main",
@@ -55,12 +60,21 @@ $( "body" ).mousemove(function( e ) {
     }).fail(function(err){
     });
 
-  console.log(e.pageX-prevX,e.pageY-prevY,Date.now());
+    //For testing purposes
+    //Print to Webpage 
+    $('#mouseMovement').prepend('<p><small>' +(mouseCoords.X)+' , '+(mouseCoords.Y)+' : ' + mouseCoords.timestamp+'</small></p>');
+    
+    
+    }
+    
+
     prevX=e.pageX
     prevY=e.pageY
 
 });
 </script>
+
+
 </body>
 
 </html>
