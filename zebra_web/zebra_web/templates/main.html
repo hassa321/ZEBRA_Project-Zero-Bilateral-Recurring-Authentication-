@@ -39,25 +39,23 @@ $( "body" ).mousemove(function( e ) {
     //when mouse moved recieve coordinates and send to server to be proccessed
   var mouseCoords = {
         'mouseX': e.pageX,
-        'mouseY': e.pageY
+        'mouseY': e.pageY,
+        'timestamp': Date.now()
+
     };
     var json2 = JSON.stringify(mouseCoords);
     //send mouse data using post call
-    $.ajax({
-        type: "POST",   
-        url: '/main'
-        data: $json2
-        dataType: 'json',
-        success: function(data){      
-            
-        
-        }
-   }).fail(function() {
-            
-   });
+    $.ajax({ 
+        method: "POST", 
+        url: "/main",
+        data: mouseCoords
+    }).done(function(data){
+       //success
+    }).fail(function(err){
+    });
 
   "( " + e.pageX + ", " + e.pageY + " )";
-  console.log(e.pageX,e.pageY);
+  console.log(e.pageX,e.pageY,Date.now());
     
 
 });
