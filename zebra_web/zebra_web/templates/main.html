@@ -35,28 +35,29 @@
 
 
 <script>
+var prevX,prevY=50;
 $( "body" ).mousemove(function( e ) {
-    //when mouse moved recieve coordinates and send to server to be proccessed
-  var mouseCoords = {
+    //when mouse moved, recieve coordinates, calculate difference vector,time and send to server to be proccessed
+    var mouseCoords = {
         'mouseX': e.pageX,
         'mouseY': e.pageY,
         'timestamp': Date.now()
-
     };
-    var json2 = JSON.stringify(mouseCoords);
+   
+    var jsonMouseData = JSON.stringify(mouseCoords);
     //send mouse data using post call
     $.ajax({ 
         method: "POST", 
         url: "/main",
-        data: mouseCoords
+        data: jsonMouseData
     }).done(function(data){
        //success
     }).fail(function(err){
     });
 
-  "( " + e.pageX + ", " + e.pageY + " )";
-  console.log(e.pageX,e.pageY,Date.now());
-    
+  console.log(e.pageX-prevX,e.pageY-prevY,Date.now());
+    prevX=e.pageX
+    prevY=e.pageY
 
 });
 </script>

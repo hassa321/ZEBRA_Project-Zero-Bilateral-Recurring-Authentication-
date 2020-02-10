@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, json, flash, redirect, url_for
 
+
 app = Flask(__name__)
 
 @app.route("/")
