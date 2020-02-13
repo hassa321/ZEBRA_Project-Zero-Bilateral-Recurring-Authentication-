@@ -22,4 +22,10 @@ Zero Effort Continuous Authentication Implementation
 2. https://realpython.com/introduction-to-flask-part-2-creating-a-login-page/
 3. https://flask.palletsprojects.com/en/1.1.x/patterns/flashing/
 
+#### Apple Watch app and Data Extraction tutorials and resources
+1. https://medium.com/@jaewhyun/building-a-watchos-and-ios-app-using-coremotion-and-watchconnectivity-594bfe0839bf
+2. https://heartbeat.fritz.ai/introduction-to-apple-watchkit-with-core-motion-tracking-jumping-jacks-259ee80d1210
+3. https://developer.apple.com/documentation/coremotion
+
+
 ### Week 2 (Feb 14th, 2020)
