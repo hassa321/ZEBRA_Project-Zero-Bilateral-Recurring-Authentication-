@@ -29,3 +29,12 @@ Zero Effort Continuous Authentication Implementation
 
 
 ### Week 2 (Feb 14th, 2020)
+
+#### MouseData Webpage Extraction tutorials and resources 
+1. https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/43796.pdf
+2. https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent
+
+#### AJAX Data 
+1. https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/43796.pdf
+2. https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent
+
