@@ -34,4 +34,6 @@ Zero Effort Continuous Authentication Implementation
 1. https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/43796.pdf
 2. https://developers.google.com/maps/documentation/javascript/events
 #### AJAX Server Calls resources 
-2. https://developer.mozilla.org/en-US/docs/Web/Guide/AJAX/Getting_Started
+1. https://developer.mozilla.org/en-US/docs/Web/Guide/AJAX/Getting_Started
+2. https://plainjs.com/javascript/ajax/send-ajax-get-and-post-requests-47/
+
