@@ -4,11 +4,12 @@
 <head>
     <title>ZEBRA - AppleWatch</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 </head>
 
 <body>
-
-    <div class="container">
+<div class="container" >
+  
         <div class="header">
             <nav>
                 <ul class="nav nav-pills pull-right">
@@ -23,13 +24,57 @@
         
         <div class="jumbotron">
             <h1>DUMMY TEXT</h1>
-            <p>blah blah blah</p>
-            <p>blah blah blah</p>
-            <p>blah blah blah</p>
-            <p>blah blah blah</p>
-            </p>
-        </div>
+             <div class="header">
+            <h4> Mouse Movements(±X,±Y) with Timestamps (Unix)<h4>
+                <div  id="mouseMovement">Hello World! </div>
+            </div>
+         
+      
+
     </div>
+
+
+
+<script>
+var prevX,prevY=50; 
+var testVar;
+$( "body" ).mousemove(function( e ) {
+    //when mouse moved, recieve coordinates, calculate difference vector,time and send to server to be proccessed
+    var mouseCoords = {
+        'X': e.pageX-prevX,
+        'Y': e.pageY-prevY,
+        'timestamp': Date.now()
+    };
+  
+    if(mouseCoords.X==0 && mouseCoords.Y==0){
+    }else{
+
+    var jsonMouseData = JSON.stringify(mouseCoords);
+    //Send mouse data using post call
+    $.ajax({ 
+        method: "POST", 
+        url: "/main",
+        data: jsonMouseData
+    }).done(function(data){
+       //success
+    }).fail(function(err){
+    });
+
+    //For testing purposes
+    //Print to Webpage 
+    $('#mouseMovement').prepend('<p><small>' +(mouseCoords.X)+' , '+(mouseCoords.Y)+' : ' + mouseCoords.timestamp+'</small></p>');
+    
+    
+    }
+    
+
+    prevX=e.pageX
+    prevY=e.pageY
+
+});
+</script>
+
+
 </body>
 
 </html>

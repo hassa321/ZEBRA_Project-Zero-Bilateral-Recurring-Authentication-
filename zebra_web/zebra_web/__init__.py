@@ -1,4 +1,6 @@
 from flask import Flask, render_template, request, json, flash, redirect, url_for
+
+
 app = Flask(__name__)
 
 @app.route("/")
@@ -17,7 +19,14 @@ def login():
 
 @app.route('/main')
 def main():
-    return render_template('main.html')
+    if request.method == 'POST':
+       #mouse data sent over
+       #Do Something Here 
+       data=request.json
+
+       
+    else:
+        return render_template('main.html')
 
 '''
     At some point later on we need to implement some sort of logout feature so that
