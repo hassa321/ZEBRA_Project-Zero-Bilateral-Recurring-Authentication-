@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JS Keylogger</title>
+	<meta charset="UTF-8" />
+
+</head>
+
+<body>
+  Type Your Message:
+	<input type="text" placeholder="Your Message..." id="textbox"/>
+
+
+  <script>
+
+    document.getElementById('textbox').style.height="500px";
+    document.getElementById('textbox').style.width="500px";
+
+    document.body.addEventListener('keyup', function(event) {
+			var timestamp = Date.now();
+			if ('Escape12345`~!@#$%qwertQWERTasdfgASDFGzxcvbZXCVBCapsLock'.includes(event.key)) {
+				var keyuptext = "LEFT Key Up: " + timestamp + " " + event.key;
+			} else if ('ShiftControlAltMeta'.includes(event.key) && event.location == 1){
+				var keyuptext = "LEFT Key Up: " + timestamp + " " + event.key;
+			} else if ('ShiftControlAltMeta'.includes(event.key) && event.location == 2){
+				var keyuptext = "RIGHT Key Up: " + timestamp + " " + event.key;
+			} else if (' '.includes(event.key)){
+				var keyuptext = "CENTER Key Up: " + timestamp + " " + "Space";
+			} else {
+				var keyuptext = "RIGHT Key Up: " + timestamp + " " + event.key;
+			}
+
+      console.log(keyuptext);
+
+    });
+
+    document.body.addEventListener('keypress', function(event) {
+			var timestamp = Date.now();
+			if ('Escape12345`~!@#$%qwertQWERTasdfgASDFGzxcvbZXCVBCapsLock'.includes(event.key)) {
+				var keypresstext = "LEFT Key Pressed: " + timestamp + " " + event.key;
+			} else if ('ShiftControlAltMeta'.includes(event.key) && event.location == 1){
+				var keypresstext = "LEFT Key Pressed: " + timestamp + " " + event.key;
+			} else if ('ShiftControlAltMeta'.includes(event.key) && event.location == 2){
+				var keypresstext = "RIGHT Key Pressed: " + timestamp + " " + event.key;
+			} else if (' '.includes(event.key)){
+				var keypresstext = "CENTER Key Pressed: " + timestamp + " " + "Space";
+			} else {
+				var keypresstext = "RIGHT Key Pressed: " + timestamp + " " + event.key;
+			}
+
+      console.log(keypresstext);
+    });
+  </script>
+</body>
+</html>
