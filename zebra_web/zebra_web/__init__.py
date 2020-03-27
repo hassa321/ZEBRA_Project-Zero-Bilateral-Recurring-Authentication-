@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, json, flash, redirect, url_fo
 
 
 app = Flask(__name__)
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 @app.route("/")
 def index():
@@ -12,6 +13,7 @@ def login():
     error = None
     if request.method == 'POST':
         if request.form['inputUserName'] != 'admin' or request.form['inputPassword'] != 'admin':
+            flash('You entered the wrong credentials. Please try again', 'danger')
             error = 'Invalid Credentials. Please try again.'
         else:
             return redirect(url_for('main'))
