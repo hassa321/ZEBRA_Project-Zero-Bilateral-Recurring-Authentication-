@@ -37,3 +37,10 @@ Zero Effort Continuous Authentication Implementation
 1. https://developer.mozilla.org/en-US/docs/Web/Guide/AJAX/Getting_Started
 2. https://plainjs.com/javascript/ajax/send-ajax-get-and-post-requests-47/
 
+
+### Week 11 (March 27th, 2020)
+#### Flash Message
+1. https://flask.palletsprojects.com/en/1.1.x/patterns/flashing/
+2. https://pythonise.com/series/learning-flask/flask-message-flashing
+#### Mouse and Keyboard timeout
+1. https://flask.palletsprojects.com/en/1.1.x/patterns/flashing/
