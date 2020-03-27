@@ -30,13 +30,12 @@ def main():
     else:
         return render_template('main.html')
 
-'''
-    At some point later on we need to implement some sort of logout feature so that
-    when either the user wants to logout or is kicked off then we properly exist the
-    'session'
-'''
+@app.route('/logout', methods=['GET', 'POST'])
 def logout():
-    pass
+    if request.method == 'POST':
+        return redirect(url_for('login'))
+
+    return render_template('logout.html')
 
 if __name__ == "__main__":
     app.run()
