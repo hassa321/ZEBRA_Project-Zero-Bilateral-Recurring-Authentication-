@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, json, flash, redirect, url_fo
 
 
 app = Flask(__name__)
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 @app.route("/")
 def index():
@@ -12,6 +13,7 @@ def login():
     error = None
     if request.method == 'POST':
         if request.form['inputUserName'] != 'admin' or request.form['inputPassword'] != 'admin':
+            flash('You entered the wrong credentials. Please try again', 'danger')
             error = 'Invalid Credentials. Please try again.'
         else:
             return redirect(url_for('main'))
@@ -28,13 +30,12 @@ def main():
     else:
         return render_template('main.html')
 
-'''
-    At some point later on we need to implement some sort of logout feature so that
-    when either the user wants to logout or is kicked off then we properly exist the
-    'session'
-'''
+@app.route('/logout', methods=['GET', 'POST'])
 def logout():
-    pass
+    if request.method == 'POST':
+        return redirect(url_for('login'))
+
+    return render_template('logout.html')
 
 if __name__ == "__main__":
     app.run()
