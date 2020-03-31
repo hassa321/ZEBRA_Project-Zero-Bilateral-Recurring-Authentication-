@@ -5,24 +5,9 @@
     <title>ZEBRA - AppleWatch</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    
 </head>
 
-<script>
-    let timeout = null;
-    window.addEventListener('keyup', function (e) {
-        clearTimeout(timeout);
-        timeout = setTimeout(function () {
-            document.getElementById("logout").click();
-        }, 100000);
-    });
-    window.addEventListener('mousemove', function (e) {
-        clearTimeout(timeout);
-        timeout = setTimeout(function () {
-            document.getElementById("logout").click();
-        }, 100000);
-    });
-
-</script>
 
 <body>
     <div class="container">
@@ -39,10 +24,63 @@
             <h3 class="text-muted">ZEBRA App - An Apple SmartWatch Implementation</h3>
         </div>
 
-        <div class="jumbotron">
-            <h1>Welcome to our Demo :)</h1>
+        <div class="jumbotron" >
+            <h1 id ="demo">Welcome to our DemoA :)</h1>
 
         </div>
+        <textarea id ="textarea" rows ="4" cols ="150"> 
+        </textarea>
+        <button id = "b">
+        </button>
+
+
+
+
+
+
+
+
+
+<script>
+    let timeout = null;
+    window.addEventListener('keyup', function (e) {
+        clearTimeout(timeout);
+        timeout = setTimeout(function () {
+            document.getElementById("logout").click();
+        }, 600000);
+    });
+    window.addEventListener('mousemove', function (e) {
+        clearTimeout(timeout);
+        timeout = setTimeout(function () {
+            document.getElementById("logout").click();
+        }, 600000);
+    });
+
+
+    var typingTimer;
+    var doneTypingInterval = 5000;
+
+    const textarea = document.getElementById("textarea")
+
+    textarea.addEventListener("keypress", logKeyPress);
+    textarea.addEventListener("keyup", logKeyUp )
+
+    function logKeyUp(e) {
+    console.log(Date.now(),e.key);
+    }
+
+    function logKeyPress(e) {
+    console.log(Date.now(),e.key);
+    }
+
+
+    
+
+
+
+</script>
+
+
 </body>
 
 </html>
