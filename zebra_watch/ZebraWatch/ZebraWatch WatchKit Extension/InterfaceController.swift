@@ -19,17 +19,14 @@ extension Date {
 
 class InterfaceController: WKInterfaceController {
     
-    /*struct ToDoResponseModel: Codable {
+   struct WatchData: Codable {
         var Ax: Double
         var Ay: Double
         var Az: Double
-        var Gx: Double
-        var Gy: Double
-        var Gz: Double
         var TimeStamp: Int64
     
     }
-   */
+   
     
     @IBOutlet weak var accelerationLbl: WKInterfaceLabel!
     
@@ -41,11 +38,40 @@ class InterfaceController: WKInterfaceController {
     var accelerationStr = ""
     var gyroscopeStr = ""
     
+    var activityStr = ""
+    
+
+    
     
     let motionManager = CMMotionManager()
-    let sampleInterval = 1.0 / 1 //replace for 50 later
+    let sampleInterval = 1.0 / 50 //replace for 50 later
     let queue = OperationQueue()
-
+    let queueact = OperationQueue()
+    
+    
+    var motionActivityManager = CMMotionActivityManager()
+    
+    /*
+    func startActUpdates() {
+        if CMMotionActivityManager.isActivityAvailable() {
+            motionActivityManager.startActivityUpdates(to: queue, withHandler: {
+                activityData
+                in
+                if activityData!.walking == true {
+                    self.activityStr = "Walking"
+                } else if activityData!.running == true {
+                    self.activityStr = "Running"
+                } else if activityData!.automotive == true {
+                    self.activityStr = "Automotive"
+                } else if activityData!.stationary == true {
+                     self.activityStr = "Stationary"
+                }
+                //print("\n\n\nActivity Data: ", activityData!)
+            })
+        }
+    }
+    
+*/
     
     func updateLabels() {
         accelerationLbl.setText(accelerationString)
@@ -53,6 +79,7 @@ class InterfaceController: WKInterfaceController {
     }
     
     func startUpdates() {
+
            if !motionManager.isDeviceMotionAvailable {
                print("Device Motion is not available.")
                //return
@@ -72,6 +99,7 @@ class InterfaceController: WKInterfaceController {
                    self.gyroscopeString = "Collecting data"
                }
            }
+        
        }
 
        func stopUpdates() {
@@ -83,7 +111,8 @@ class InterfaceController: WKInterfaceController {
        }
     
     func processDeviceMotion(_ deviceMotion: CMDeviceMotion) {
-          accelerationStr = String(format: "X: %.1f Y: %.1f Z: %.1f" ,
+         /*
+         accelerationStr = String(format: "X: %.1f Y: %.1f Z: %.1f" ,
                              deviceMotion.userAcceleration.x,
                              deviceMotion.userAcceleration.y,
                              deviceMotion.userAcceleration.z)
@@ -92,13 +121,45 @@ class InterfaceController: WKInterfaceController {
                                 deviceMotion.rotationRate.y,
                                 deviceMotion.rotationRate.z)
          
-          
-          let timestamp = Date().millisecondsSince1970
+          */
+            let timestamp = Date().millisecondsSince1970
+            
+           //PLEASE WORK I NEED A BREAK
+            
+            //let json = ["user":"admin"]
         
+            let newTodoItem = WatchData(Ax: deviceMotion.userAcceleration.x, Ay: deviceMotion.userAcceleration.y, Az: deviceMotion.userAcceleration.z, TimeStamp: timestamp)
+            
+            var request = URLRequest(url: URL(string: "http://ec2-3-89-187-162.compute-1.amazonaws.com/watch")!)
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+            request.httpMethod = "POST"
+    
+            let jsonData = try? JSONEncoder().encode(newTodoItem)
+            
+            request.httpBody = jsonData
+            
+            // Perform HTTP Request
+            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                    
+                    // Check for Error
+                    if let error = error {
+                        print("Error took place \(error)")
+                        return
+                    }
+             
+                    // Convert HTTP Response Data to a String
+                    if let data = data, let dataString = String(data: data, encoding: .utf8) {
+                        print("Response data string:\n \(dataString)")
+                    }
+            }
+            task.resume()
+            
+            
          //TESTING POST REQUESTS
-        /*
+         /*
               // Prepare URL
-              var request = URLRequest(url: URL(string: "http://localhost:3000/posts")!)
+              var request = URLRequest(url: URL(string: "http://localhost:8000")!)
               request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
               request.httpMethod = "POST"
@@ -109,6 +170,7 @@ class InterfaceController: WKInterfaceController {
         
         
               let newTodoItem = ToDoResponseModel(Ax: deviceMotion.userAcceleration.x, Ay: deviceMotion.userAcceleration.y, Az: deviceMotion.userAcceleration.z, Gx: deviceMotion.rotationRate.x, Gy: deviceMotion.rotationRate.y, Gz: deviceMotion.rotationRate.z, TimeStamp: timestamp)
+        
               let jsonData = try? JSONEncoder().encode(newTodoItem)
         
               request.httpBody = jsonData
@@ -128,19 +190,29 @@ class InterfaceController: WKInterfaceController {
                       }
               }
               task.resume()
-              */
+              
+         
         //END TESTING POST REQUESTS
-       
-          os_log("Motion: %@, %@, %@, %@, %@, %@, %@",
+        */
+                 os_log("Motion: %@, %@, %@, %@",
                  String(timestamp),
                  String(deviceMotion.userAcceleration.x),
                  String(deviceMotion.userAcceleration.y),
-                 String(deviceMotion.userAcceleration.z),
-                 String(deviceMotion.rotationRate.x),
-                 String(deviceMotion.rotationRate.y),
-                 String(deviceMotion.rotationRate.z))
+                 String(deviceMotion.userAcceleration.z))
+         
         
+        /*
+          print(String(timestamp),
+          String(deviceMotion.userAcceleration.x),
+          String(deviceMotion.userAcceleration.y),
+          String(deviceMotion.userAcceleration.z),
+          String(deviceMotion.rotationRate.x),
+          String(deviceMotion.rotationRate.y),
+          String(deviceMotion.rotationRate.z));
+        */
           updateLabels();
+        
+        
           
           //updateMetrics();
       }
@@ -161,6 +233,7 @@ class InterfaceController: WKInterfaceController {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
         startUpdates()
+        //startActUpdates()
         postData()
     }
     
