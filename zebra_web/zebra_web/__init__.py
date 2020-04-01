@@ -25,14 +25,16 @@ def login():
 @app.route('/main', methods=['GET', 'POST'])
 def main():
     if request.method == 'POST':
-       #mouse data sent over
+       #keyboardStrokes for Demo data sent over here
        #Do Something Here 
-       data = request.json
-       print(splitKeyboardStrokes(data))
-       return '8'
+       data=request.json
+       formattedKeyEvents= splitKeyboardStrokes(data)
+       #mapSequences(formattedKeyEvents,watchdata)
+
+       return 'success'
        
     else:
-        print(4)
+        
         return render_template('main.html')
 
 
@@ -47,7 +49,6 @@ def logout():
         return redirect(url_for('login'))
 
     return render_template('logout.html')
-
 
 
 
@@ -72,14 +73,14 @@ def splitKeyboardStrokes(data):
         else:
             keys_released.append([keyEvent.get("timestamp"), keyEvent.get("location"), keyEvent.get("key")])    
 
-    return keys_released
+    return [keys_released,keys_pressed]
 
 
 
-    def mapSequences()
-    # Go through the watch data and map each sequence with a key
-    # Sequence begins when a key is released until the next is pressed 
-    #not complete due to watch data not being able to be sent to server. 
+def mapSequences():
+# Go through the watch data and map each sequence with a key
+# Sequence begins when a key is released until the next is pressed 
+#not complete due to watch data not being able to be sent to server. 
 
     sequences=[]
     count = 0

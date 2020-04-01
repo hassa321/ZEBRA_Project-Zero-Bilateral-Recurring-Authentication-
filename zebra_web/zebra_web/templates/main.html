@@ -81,14 +81,14 @@
         
            typingTime = (new Date() - typingdate) / 1000
            
-           if (typingTime<2){
+           if (typingTime<20){
                 typing = false
-                message.innerHTML="Please type for 20 consecutive seconds"
+                message.innerHTML="Please type for 20 consecutive seconds, You typed for "+ typingTime+" seconds."
                 textarea.value=""
                 console.log(typingTime)
                 keystrokes=[]
             }else{
-                message.innerHTML= "Success! Analyzing Keystrokes..."
+                message.innerHTML= "Success, Analyzing Keystrokes..."
                 console.log(typingTime)
                 success=true;
                 //Send keystrokes to server for processissing 
