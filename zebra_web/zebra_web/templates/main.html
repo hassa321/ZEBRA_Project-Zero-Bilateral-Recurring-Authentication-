@@ -26,8 +26,9 @@
 
         <div class="jumbotron" >
             <h1 id ="demo">Welcome to our DemoA :)</h1>
-
+           
         </div>
+         <h4 id ="message" stye=“margin-top: 200px;”> Please Continue to type for 20 seconds Straight</h4>
         <textarea id ="textarea" rows ="4" cols ="150"> 
         </textarea>
         <button id = "b">
@@ -56,25 +57,96 @@
         }, 600000);
     });
 
-
-    var typingTimer;
-    var doneTypingInterval = 5000;
-
+    //starting typing
+    var typing = false 
+    let typingTimer=null ;                //timer identifier
+    var keystrokes=[]
     const textarea = document.getElementById("textarea")
+    const message = document.getElementById("message")
+    var typingTime; 
+    var donetypingdate
+    var success=false
 
-    textarea.addEventListener("keypress", logKeyPress);
-    textarea.addEventListener("keyup", logKeyUp )
+    //key up logging
+    textarea.addEventListener('keyup', function(event) {
 
-    function logKeyUp(e) {
-    console.log(Date.now(),e.key);
+        if (success){
+            //if keystrokes already sent to server for testing, do nothing
+        }else{
+
+        clearTimeout(typingTimer);
+
+        // Make a new timeout set to go off in 1000ms (1 second)
+        typingTimer = setTimeout(function () {
+        
+           typingTime = (new Date() - typingdate) / 1000
+           
+           if (typingTime<10){
+                typing = false
+                message.innerHTML="Please type for 20 consecutive seconds"
+                textarea.value=""
+                console.log(typingTime)
+                keystrokes=[]
+            }else{
+                message.innerHTML= "Success! Analyzing Keystrokes..."
+                console.log(typingTime)
+                console.log(keystrokes)
+                success=true;
+                //Send keystrokes to server for processissing 
+             }
+
+        }, 1000);
+
+
+        var timestamp = Date.now();
+        if ('Escape12345`~!@#$%qwertQWERTasdfgASDFGzxcvbZXCVBCapsLock'.includes(event.key)) {
+            keystrokes.push({"timestamp":timestamp, "action": "keyup", "key": event.key, "location": "left"})
+        }else if ('ShiftControlAltMeta'.includes(event.key) && event.location == 1){
+            keystrokes.push({"timestamp":timestamp, "action": "keyup", "key": event.key, "location": "left"})
+        }else if ('ShiftControlAltMeta'.includes(event.key) && event.location == 2){
+            keystrokes.push({"timestamp":timestamp, "action": "keypress", "key": event.key, "location": "right"})
+        }else if (' '.includes(event.key)){
+            keystrokes.push({"timestamp":timestamp, "action": "keypress", "key": "Space", "location": "center"})
+        }else{
+            keystrokes.push({"timestamp":timestamp, "action": "keypress", "key": event.key, "location": "right"})
+        }
+
     }
+      
 
-    function logKeyPress(e) {
-    console.log(Date.now(),e.key);
-    }
+    });
+
+    textarea.addEventListener('keypress', function(event) {
+
+        if (success){
+        //if keystrokes already sent to server for testing, do nothing
+         }else{
+            if(typing==false){
+                typing=true
+                message.innerHTML="Typing..."
+                typingdate= new Date()
+            }
+
+            var timestamp = Date.now();
+            if ('Escape12345`~!@#$%qwertQWERTasdfgASDFGzxcvbZXCVBCapsLock'.includes(event.key)) {
+                var keypresstext = timestamp+ ", keypress, "+ event.key+ " left";
+                keystrokes.push({"timestamp":timestamp, "action": "keypress", "key": event.key, "location": "left"})
+            } else if ('ShiftControlAltMeta'.includes(event.key) && event.location == 1){
+                keystrokes.push({"timestamp":timestamp, "action": "keypress", "key": event.key, "location": "left"})
+            } else if ('ShiftControlAltMeta'.includes(event.key) && event.location == 2){
+                keystrokes.push({"timestamp":timestamp, "action": "keypress", "key": event.key, "location": "right"})
+            } else if (' '.includes(event.key)){
+                keystrokes.push({"timestamp":timestamp, "action": "keypress", "key": "Space", "location": "center"})
+            } else {
+                keystrokes.push({"timestamp":timestamp, "action": "keypress", "key": event.key, "location": "right"})
+            }
+        }
+
+  });
 
 
-    
+
+
 
 
 
