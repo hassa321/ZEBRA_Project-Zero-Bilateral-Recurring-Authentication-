@@ -81,7 +81,7 @@
         
            typingTime = (new Date() - typingdate) / 1000
            
-           if (typingTime<10){
+           if (typingTime<2){
                 typing = false
                 message.innerHTML="Please type for 20 consecutive seconds"
                 textarea.value=""
@@ -90,9 +90,21 @@
             }else{
                 message.innerHTML= "Success! Analyzing Keystrokes..."
                 console.log(typingTime)
-                console.log(keystrokes)
                 success=true;
                 //Send keystrokes to server for processissing 
+                var JsonKeystrokes = JSON.stringify(keystrokes);
+                $.ajax({ 
+                type: "POST", 
+                url: "/main",
+                contentType: "application/json;charset=UTF-8",
+                dataType:'json',
+                data: JsonKeystrokes
+                }).done(function(data){
+                //success, fires when the ajax call is complete
+                }).fail(function(err){
+                });
+
+
              }
 
         }, 1000);

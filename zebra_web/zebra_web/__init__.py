@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, json, flash, redirect, url_for
+import re
 
 
 app = Flask(__name__)
@@ -19,16 +20,26 @@ def login():
             return redirect(url_for('main'))
     return render_template('login.html', error=error)
 
-@app.route('/main')
+
+
+@app.route('/main', methods=['GET', 'POST'])
 def main():
     if request.method == 'POST':
        #mouse data sent over
        #Do Something Here 
-       data=request.json
-
+       data = request.json
+       print(splitKeyboardStrokes(data))
+       return '8'
        
     else:
+        print(4)
         return render_template('main.html')
+
+
+
+
+
+
 
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
@@ -36,6 +47,55 @@ def logout():
         return redirect(url_for('login'))
 
     return render_template('logout.html')
+
+
+
+
+
+
+
+
+def splitKeyboardStrokes(data):
+    locations = {"left": 0, "center": 1, "right": 2}
+    special_keys = {"Shift": 1, "Control": 2, "Alt": 3, "None": 0}
+    keys_pressed = []
+    keys_released = []
+    all_keys_used = []
+    last_event = None
+    
+    for keyEvent in data:
+        #Seperate keyEvents by Up or keypress
+        #Timestamp, key side, key
+        if keyEvent.get("action") == "keypress":
+
+            keys_pressed.append([keyEvent.get("timestamp"), keyEvent.get("location"), keyEvent.get("key")])
+        else:
+            keys_released.append([keyEvent.get("timestamp"), keyEvent.get("location"), keyEvent.get("key")])    
+
+    return keys_released
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 if __name__ == "__main__":
     app.run()
