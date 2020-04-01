@@ -76,6 +76,17 @@ def splitKeyboardStrokes(data):
 
 
 
+    def mapSequences()
+    # Go through the watch data and map each sequence with a key
+    # Sequence begins when a key is released until the next is pressed 
+    #not complete due to watch data not being able to be sent to server. 
+
+    sequences=[]
+    count = 0
+
+
+
+
 
 
 
