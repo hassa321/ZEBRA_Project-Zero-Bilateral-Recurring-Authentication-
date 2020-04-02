@@ -13,13 +13,13 @@
         clearTimeout(timeout);
         timeout = setTimeout(function () {
             document.getElementById("logout").click();
-        }, 10000);
+        }, 60000);
     });
     window.addEventListener('mousemove', function (e) {
         clearTimeout(timeout);
         timeout = setTimeout(function () {
             document.getElementById("logout").click();
-        }, 10000);
+        }, 60000);
     });
 
 </script>
@@ -40,9 +40,98 @@
         </div>
 
         <div class="jumbotron">
-            <h1>Hi :)</h1>
+            <div>
+                <h1> Type Your Message: </h1>
+                <input type="text" placeholder="Your Message..." id="textbox" />
+            </div>
+            <script>
+
+                document.getElementById('textbox').style.height = "36px";
+                document.getElementById('textbox').style.width = "500px";
+
+                document.body.addEventListener('keyup', function (event) {
+                    var timestamp = Date.now();
+                    if ('Escape12345`~!@#$%qwertQWERTasdfgASDFGzxcvbZXCVBCapsLock'.includes(event.key)) {
+                        var keyuptext = timestamp + ", keyup, " + event.key + ", left";
+                    } else if ('ShiftControlAltMeta'.includes(event.key) && event.location == 1) {
+                        var keyuptext = timestamp + ", keyup, " + event.key + ", left";
+                    } else if ('ShiftControlAltMeta'.includes(event.key) && event.location == 2) {
+                        var keyuptext = keypresstext = timestamp + ", keyup, " + event.key + ", right";
+                    } else if (' '.includes(event.key)) {
+                        var keyuptext = timestamp + ", keyup, Space" + ", center";
+                    } else {
+                        var keyuptext = timestamp + ", keyup, " + event.key + ", right";
+                    }
+
+                    console.log(keyuptext);
+                    document.getElementById('timestamp').prepend(timestamp+"\n");
+                    document.getElementById('keyaction').prepend("keyup\n");
+                    document.getElementById('key').innerHTML = event.key + "<br>" + document.getElementById('key').innerHTML;
+                });
+
+                document.body.addEventListener('keypress', function (event) {
+                    var timestamp = Date.now();
+                    if ('Escape12345`~!@#$%qwertQWERTasdfgASDFGzxcvbZXCVBCapsLock'.includes(event.key)) {
+                        var keypresstext = timestamp + ", keypress, " + event.key + ", left";
+                    } else if ('ShiftControlAltMeta'.includes(event.key) && event.location == 1) {
+                        var keypresstext = timestamp + ", keypress, " + event.key + ", left";
+                    } else if ('ShiftControlAltMeta'.includes(event.key) && event.location == 2) {
+                        var keypresstext = timestamp + ", keypress, " + event.key + ", right";
+                    } else if (' '.includes(event.key)) {
+                        var keypresstext = timestamp + ", keypress, Space" + ", center";
+                    } else {
+                        var keypresstext = timestamp + ", keypress, " + event.key + ", right";
+                    }
+
+                    console.log(keypresstext);
+                    document.getElementById('timestamp').prepend(timestamp+"\n");
+                    document.getElementById('keyaction').prepend("keypress\n");
+                    document.getElementById('key').innerHTML = event.key + "<br>" + document.getElementById('key').innerHTML;
+
+                });
+            </script>
+            <br>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2">
+                        <p> Timestamp </p>
+                    </div>
+                    <div class="col-md-2">
+                        <p> Key action </p>
+                    </div>
+                    <div class="col-md-2">
+                        <p> Key </p>
+                    </div>
+                    <div class="col-md-1">
+                        <p> </p>
+                    </div>
+                    <div class="col-md-2">
+                        <p> Predicted key </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <p id="timestamp"> </p>
+                    </div>
+                    <div class="col-md-2">
+                        <p id="keyaction"> </p>
+                    </div>
+                    <div class="col-md-2">
+                        <p id="key"> </p>
+                    </div>
+                    <div class="col-md-1">
+                        <p> </p>
+                    </div>
+                    <div class="col-md-2">
+                        <p id="predicted"></p>
+                    </div>
+                </div>
+            </div>
 
         </div>
+
+
 </body>
 
 </html>
