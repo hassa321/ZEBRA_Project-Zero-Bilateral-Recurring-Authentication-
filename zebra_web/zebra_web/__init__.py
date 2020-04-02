@@ -1,5 +1,5 @@
-from flask import Flask, render_template, request, json, flash, redirect, url_for
-
+from flask import Flask, render_template, request, json, flash, redirect, url_for, jsonify 
+watch_data = []
 
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -36,6 +36,12 @@ def logout():
         return redirect(url_for('login'))
 
     return render_template('logout.html')
+
+@app.route('/watch', methods = ['GET', 'POST'])
+def get_messages():
+    data = request.get_json()
+    watch_data.append(data)
+    return jsonify({'watch:': watch_data})
 
 if __name__ == "__main__":
     app.run()
