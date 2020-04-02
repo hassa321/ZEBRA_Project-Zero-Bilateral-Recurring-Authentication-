@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
- 
+
 <head>
     <title>ZEBRA - AppleWatch</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 </head>
- 
+
 <body>
     <div class="container">
         <div class="header">
@@ -19,27 +19,40 @@
             </nav>
             <h3 class="text-muted">ZEBRA App - An Apple SmartWatch Implementation</h3>
         </div>
- 
+
         <div class="jumbotron">
             <h1>ZEBRA App</h1>
-            <form class="form-signin" action="login" method="POST">
-            
+            <form class="form-signin" action="login" method="POST" style="margin-bottom:50px;">
+
                 <label for="inputUserName" class="sr-only">User Name</label>
-                <input type="text" name="inputUserName" id="inputUserName" class="form-control" placeholder="User name" required>    
+                <input type="text" name="inputUserName" id="inputUserName" class="form-control" placeholder="User name"
+                    required>
 
                 <label for="inputPassword" class="sr-only">Password</label>
-                <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" required>
-                
-                <button id="btnLogin" class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+                <input type="password" name="inputPassword" id="inputPassword" class="form-control"
+                    placeholder="Password" required>
+
+                <div class="text-center">
+                    <button id="btnLogin" class="btn btn-lg btn-primary" type="submit">Login</button>
+                </div>
             </form>
+            <div>
+                <div>
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade in" role="alert">
+                    <span>{{ message }}</span>
+                </div>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+                </div>
+            </div>
         </div>
-  
-        <div>
-            {% if error %}
-              <p class=error><strong>Error:</strong> {{ error }}
-            {% endif %}
-        </div>
+
+
     </div>
 </body>
- 
+
 </html>
