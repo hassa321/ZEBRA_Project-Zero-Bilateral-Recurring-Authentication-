@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request, json, flash, redirect, url_for, jsonify 
 from passlib.hash import sha256_crypt
 
-
+keys_pressed = []
+keys_released = []
 keys_mapped = {'1': 1, '2': 1, '3': 1, '!': 1, '@': 1, '#': 1, '4': 2, '5': 2, 
                '6': 2, '$': 2, '%': 2, '^': 2, '7': 3, '8': 3, '&': 3, '*': 3, 
                '9': 4, '0': 4, '(': 4, ')': 4, '-': 5, '_': 5, '=': 5, '+': 5, 
@@ -99,39 +100,39 @@ def splitKeyboardStrokes(data):
 
     return [keys_pressed,keys_released]
 
-def map_sequences[keys_pressed,keys_released,watch_data]
-  #watch_should be in form [ [ x, y, z, timestamp] ...]
-  #keys pressed released in form [ [ timestamp, key, location]]
-  sequences = []
-  predictions = []
+
+def map_sequences(keys_pressed,keys_released,watch_data):
+    #watch_should be in form [ [ x, y, z, timestamp] ...]
+    #keys pressed released in form [ [ timestamp, key, location]]
+    sequences = []
+    predictions = []
 
 
-for i in range(len(keys_pressed)):
+    for i in range(len(keys_pressed)):
+        start = int(keys_released[i][0])
+        end = int(keys_pressed[i][0])
+        key = keys_pressed[i][2]
 
-  start = int(keys_released[i][0])
-  end = int(keys_pressed[i][0])
+        sequence = []
 
+        while len(watch_data) != 0:
+            # We want to remove the line so we dont have to iterate trough everything again
+            line = watch_data.pop(0)
+            if line == ['']:
+                continue 
 
-  sequence = []
+            time, acc_x, acc_y, acc_z = line[0], line[1], line[2], line[3]
 
-  while len(watch_data) != 0:
-    # We want to remove the line so we dont have to iterate trough everything again
-    line = copy_acc.pop(0)
-    if line == ['']:
-      continue 
+            current_time = int(time)
 
-    time, acc_x, acc_y, acc_z = line[0], line[1], line[2], line[3]
+            if (current_time < start):
+                continue 
+            if (current_time >= end):
+                break 
 
-    current_time = int(time)
-
-    if current_time < start:
-      continue 
-    if current_time >= end:
-      break 
-
-    sequence.append([float(acc_x), float(acc_y), float(acc_z)])
-    predictions.append(key)
-    sequences.append(sequence)
+            sequence.append([float(acc_x), float(acc_y), float(acc_z)])
+        predictions.append(key)
+        sequences.append(sequence)
 
     
 
