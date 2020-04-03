@@ -6,6 +6,7 @@ import time, random
 watch_data = []
 keys_pressed = []
 keys_released = []
+sequences = []
 keys_mapped = {'1': 1, '2': 1, '3': 1, '!': 1, '@': 1, '#': 1, '4': 2, '5': 2, 
                '6': 2, '$': 2, '%': 2, '^': 2, '7': 3, '8': 3, '&': 3, '*': 3, 
                '9': 4, '0': 4, '(': 4, ')': 4, '-': 5, '_': 5, '=': 5, '+': 5, 
@@ -74,8 +75,6 @@ def get_messages():
     return jsonify({'watch:': watch_data})
 
 def splitKeyboardStrokes(data):
-    keys_pressed = []
-    keys_released = []
     for keyEvent in data:
         #"timestamp": timestamp, "action": "keyup", "key": event.key, "location": "left" 
         #Seperate keyEvents by Up or keypress
@@ -100,8 +99,8 @@ def splitKeyboardStrokes(data):
             #     keys_released[-1].append(keyEvent.get("key"))
             # else:
             #     keys_released[-1].append("None")    
-
-    return [keys_pressed,keys_released]
+    keys_pressed = keys_pressed[1:]
+    keys_released = keys_released[0:-1]
 
 def create_dummy():
     milliseconds = int(round(time.time() * 1000))
@@ -164,7 +163,7 @@ def padding(sequences):
 
 def predict(batch_of_10):
   pickled = open("/loc/to/weights.pickle","r")
-  rfc = pickle.loads(pickled)
+  rfc = np.pickle.loads(pickled)
   
   prediction = rfc.predict(batch_of_10)
   if prediction >= 0.2:
