@@ -7,6 +7,7 @@ watch_data = []
 keys_presssed = []
 keys_released = []
 sequences = []
+predictions = []
 keys_mapped = {'1': 1, '2': 1, '3': 1, '!': 1, '@': 1, '#': 1, '4': 2, '5': 2, 
                '6': 2, '$': 2, '%': 2, '^': 2, '7': 3, '8': 3, '&': 3, '*': 3, 
                '9': 4, '0': 4, '(': 4, ')': 4, '-': 5, '_': 5, '=': 5, '+': 5, 
@@ -116,8 +117,6 @@ def create_dummy():
 def map_sequences(keys_pressed,keys_released,watch_data):
     #watch_should be in form [ [ x, y, z, timestamp] ...]
     #keys pressed released in form [ [ timestamp, key, location]]
-    sequences = []
-    predictions = []
 
     for i in range(len(keys_pressed)):
         start = int(keys_released[i][0])
