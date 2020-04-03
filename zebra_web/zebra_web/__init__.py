@@ -1,7 +1,9 @@
 from flask import Flask, render_template, request, json, flash, redirect, url_for, jsonify
 from passlib.hash import sha256_crypt
 import numpy as np
+import time, random
 
+watch_data = []
 keys_pressed = []
 keys_released = []
 keys_mapped = {'1': 1, '2': 1, '3': 1, '!': 1, '@': 1, '#': 1, '4': 2, '5': 2, 
@@ -101,6 +103,15 @@ def splitKeyboardStrokes(data):
 
     return [keys_pressed,keys_released]
 
+def create_dummy():
+    milliseconds = int(round(time.time() * 1000))
+    x = random.uniform(1.5, 1.9)
+    y = random.uniform(1.5, 1.9)
+    z = random.uniform(1.5,1.9)
+    watch_data.append([milliseconds,x,y,z])
+
+
+
 
 def map_sequences(keys_pressed,keys_released,watch_data):
     #watch_should be in form [ [ x, y, z, timestamp] ...]
@@ -165,3 +176,6 @@ def predict(batch_of_10):
 
 if __name__ == "__main__":
     app.run()
+    while True:
+        create_dummy()
+        time.sleep(0.02)
