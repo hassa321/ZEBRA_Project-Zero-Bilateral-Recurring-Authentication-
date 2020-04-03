@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, json, flash, redirect, url_for, jsonify 
 from passlib.hash import sha256_crypt
-
+import joblib
 
 userandpassword = sha256_crypt.encrypt("admin")
 watch_data = []
@@ -30,8 +30,6 @@ def main():
        #mouse data sent over
        #Do Something Here 
        data=request.json
-
-       
     else:
         return render_template('main.html')
 
@@ -47,6 +45,14 @@ def get_messages():
     data = request.get_json()
     watch_data.append(data)
     return jsonify({'watch:': watch_data})
+
+def predict(batch_of_10, ts):
+    path = "/resources/weights.joblib"
+    model = joblib.load(path)
+    acc = model.score(batch_of_10, ts) # batch_of_10 MUST be of shape (10, 270, 3)
+    if acc >= 0.2:
+        return True
+    return False
 
 if __name__ == "__main__":
     app.run()
