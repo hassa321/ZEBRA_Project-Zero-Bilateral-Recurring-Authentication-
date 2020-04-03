@@ -1,8 +1,7 @@
 from flask import Flask, render_template, request, json, flash, redirect, url_for, jsonify 
 from passlib.hash import sha256_crypt
 
-keys_pressed = []
-keys_released = []
+
 keys_mapped = {'1': 1, '2': 1, '3': 1, '!': 1, '@': 1, '#': 1, '4': 2, '5': 2, 
                '6': 2, '$': 2, '%': 2, '^': 2, '7': 3, '8': 3, '&': 3, '*': 3, 
                '9': 4, '0': 4, '(': 4, ')': 4, '-': 5, '_': 5, '=': 5, '+': 5, 
@@ -52,6 +51,9 @@ data at the moment is a list of items in format as
 def watch_data():
     if request.method == 'POST':
        data=request.json
+       splitKeyboardStrokes(data)
+       
+    return ''
     
 
 @app.route('/logout', methods=['GET', 'POST'])
@@ -68,6 +70,8 @@ def get_messages():
     return jsonify({'watch:': watch_data})
 
 def splitKeyboardStrokes(data):
+    keys_pressed = []
+    keys_released = []
     for keyEvent in data:
         #"timestamp": timestamp, "action": "keyup", "key": event.key, "location": "left" 
         #Seperate keyEvents by Up or keypress
@@ -78,6 +82,7 @@ def splitKeyboardStrokes(data):
         location = keyEvent.get("location")
 
         if action == "keypress":
+            
             keys_pressed.append([timestamp, keys_mapped.get(key, 19), location])
             # if keyEvent.get("key") in ["Shift", "Control", "Alt"]:
             #     keys_pressed[-1].append(keyEvent.get("key"))
@@ -92,7 +97,7 @@ def splitKeyboardStrokes(data):
             # else:
             #     keys_released[-1].append("None")    
 
-    return
+    return [keys_pressed,keys_released]
 
 
 

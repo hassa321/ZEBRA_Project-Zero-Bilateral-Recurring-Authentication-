@@ -72,7 +72,7 @@
 
                             typingTime = (new Date() - typingdate) / 1000
 
-                            if (typingTime < 20) {
+                            if (typingTime < 0.9) {
                                 typing = false
                                 message.innerHTML = "Please type for 20 consecutive seconds, You typed for " + typingTime + " seconds."
                                 textarea.value = ""
@@ -119,6 +119,7 @@
                             // var keyuptext = timestamp + ", keyup, " + event.key + ", right";
                             keystrokes.push({ "timestamp": timestamp, "action": "keyup", "key": event.key, "location": "right" });
                             section = "right";
+                            console.log(event.key)
                         }
                         
                         document.getElementById('timestamp').prepend(timestamp + "\n");
