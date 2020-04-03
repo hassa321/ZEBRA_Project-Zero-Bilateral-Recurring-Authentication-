@@ -1,4 +1,8 @@
 from flask import Flask, render_template, request, json, flash, redirect, url_for, jsonify 
+from passlib.hash import sha256_crypt
+
+
+userandpassword = sha256_crypt.encrypt("admin")
 watch_data = []
 
 app = Flask(__name__)
@@ -12,11 +16,12 @@ def index():
 def login():
     error = None
     if request.method == 'POST':
-        if request.form['inputUserName'] != 'admin' or request.form['inputPassword'] != 'admin':
+        if sha256_crypt.verify(request.form['inputUserName'], userandpassword) and \
+            sha256_crypt.verify(request.form['inputPassword'], userandpassword):
+            return redirect(url_for('main'))
+        else:
             flash('You entered the wrong credentials. Please try again', 'danger')
             error = 'Invalid Credentials. Please try again.'
-        else:
-            return redirect(url_for('main'))
     return render_template('login.html', error=error)
 
 @app.route('/main')

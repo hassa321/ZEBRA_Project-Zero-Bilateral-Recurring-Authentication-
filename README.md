@@ -1,6 +1,19 @@
 # Csc490_Zebra_Project
 Zero Effort Continuous Authentication Implementation
 
+## Locally Run
+```
+cd zebra_web
+
+pip install passlib
+pip install flask
+
+$env:FLASK_APP = "zebra_web"
+$env:FLASK_ENV = "development"
+
+flask run
+```
+
 ## References
 ---
 
@@ -44,3 +57,7 @@ Zero Effort Continuous Authentication Implementation
 2. https://pythonise.com/series/learning-flask/flask-message-flashing
 #### Mouse and Keyboard timeout
 1. https://flask.palletsprojects.com/en/1.1.x/patterns/flashing/
+
+### Week 12 (April 4th, 2020)
+#### Hashing Passwords
+1. https://pythonprogramming.net/password-hashing-flask-tutorial/
