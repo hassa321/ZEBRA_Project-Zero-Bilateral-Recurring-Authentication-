@@ -5,3 +5,4 @@ zebra_web/__pycache__/
 *.pyc
 **/instance/
 .idea/*
+.vscode/settings.json

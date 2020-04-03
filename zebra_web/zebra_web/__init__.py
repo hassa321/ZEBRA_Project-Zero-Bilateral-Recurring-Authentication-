@@ -1,5 +1,6 @@
-from flask import Flask, render_template, request, json, flash, redirect, url_for, jsonify 
+from flask import Flask, render_template, request, json, flash, redirect, url_for, jsonify
 from passlib.hash import sha256_crypt
+import numpy as np
 
 keys_pressed = []
 keys_released = []
@@ -105,8 +106,6 @@ def map_sequences(keys_pressed,keys_released,watch_data):
     #watch_should be in form [ [ x, y, z, timestamp] ...]
     #keys pressed released in form [ [ timestamp, key, location]]
     sequences = []
-    predictions = []
-
 
     for i in range(len(keys_pressed)):
         start = int(keys_released[i][0])
@@ -131,8 +130,24 @@ def map_sequences(keys_pressed,keys_released,watch_data):
                 break 
 
             sequence.append([float(acc_x), float(acc_y), float(acc_z)])
-        predictions.append(key)
         sequences.append(sequence)
+    return sequences
+
+def padding(sequences):
+    max_seq_3 = max(sequences,key=len)
+    print(max_seq_3)
+    max_len = len(max_seq_3)
+    print(max_len)
+
+    padded_sequences = []
+    for sequence in sequences:
+        while (len(sequence) < max_len):
+            sequence.append([0, 0, 0])
+        np.stack(sequence)
+        padded_sequences.append(sequence)
+    np_sequences = np.stack(padded_sequences)
+
+    print(np_sequences.shape)
 
     
 
