@@ -176,6 +176,3 @@ def predict(batch_of_10):
 
 if __name__ == "__main__":
     app.run()
-    while True:
-        create_dummy()
-        time.sleep(0.02)
