@@ -4,7 +4,7 @@ import numpy as np
 import time, random
 
 watch_data = []
-keys_pressed = []
+keys_presssed = []
 keys_released = []
 sequences = []
 keys_mapped = {'1': 1, '2': 1, '3': 1, '!': 1, '@': 1, '#': 1, '4': 2, '5': 2, 
@@ -75,6 +75,8 @@ def get_messages():
     return jsonify({'watch:': watch_data})
 
 def splitKeyboardStrokes(data):
+    key_press = []
+    key_release = []
     for keyEvent in data:
         #"timestamp": timestamp, "action": "keyup", "key": event.key, "location": "left" 
         #Seperate keyEvents by Up or keypress
@@ -84,23 +86,22 @@ def splitKeyboardStrokes(data):
         key = keyEvent.get("key")
         location = keyEvent.get("location")
 
-        if action == "keypress":
-            
-            keys_pressed.append([timestamp, keys_mapped.get(key, 19), location])
+        if action == "keypress": 
+            key_press.append([timestamp, keys_mapped.get(key, 19), location])
             # if keyEvent.get("key") in ["Shift", "Control", "Alt"]:
             #     keys_pressed[-1].append(keyEvent.get("key"))
             # else:
             #     keys_pressed[-1].append("None")
 
         elif key not in special_keys:
-            keys_released.append([timestamp, keys_mapped.get(key, 19), location])
+            key_release.append([timestamp, keys_mapped.get(key, 19), location])
             # keys_released.append([keyEvent.get("timestamp"), keyEvent.get("location"), keyEvent.get("key")])
             # if keyEvent.get("key") in ["Shift", "Control", "Alt"]:
             #     keys_released[-1].append(keyEvent.get("key"))
             # else:
             #     keys_released[-1].append("None")    
-    keys_pressed = keys_pressed[1:]
-    keys_released = keys_released[0:-1]
+    keys_pressed = key_press[1:]
+    keys_released = key_release[0:-1]
 
 def create_dummy():
     milliseconds = int(round(time.time() * 1000))
