@@ -68,10 +68,17 @@ def splitKeyboardStrokes(data):
         #Seperate keyEvents by Up or keypress
         #Timestamp, key side, key
         if keyEvent.get("action") == "keypress":
-
             keys_pressed.append([keyEvent.get("timestamp"), keyEvent.get("location"), keyEvent.get("key")])
+            if keyEvent.get("key") in ["Shift", "Control", "Alt"]:
+                keys_pressed[-1].append(keyEvent.get("key"))
+            else:
+                keys_pressed[-1].append("None")
         else:
-            keys_released.append([keyEvent.get("timestamp"), keyEvent.get("location"), keyEvent.get("key")])    
+            keys_released.append([keyEvent.get("timestamp"), keyEvent.get("location"), keyEvent.get("key")])
+            if keyEvent.get("key") in ["Shift", "Control", "Alt"]:
+                keys_released[-1].append(keyEvent.get("key"))
+            else:
+                keys_released[-1].append("None")    
 
     return [keys_released,keys_pressed]
 
