@@ -99,7 +99,41 @@ def splitKeyboardStrokes(data):
 
     return [keys_pressed,keys_released]
 
+def map_sequences[keys_pressed,keys_released,watch_data]
+  #watch_should be in form [ [ x, y, z, timestamp] ...]
+  #keys pressed released in form [ [ timestamp, key, location]]
+  sequences = []
+  predictions = []
 
+
+for i in range(len(keys_pressed)):
+
+  start = int(keys_released[i][0])
+  end = int(keys_pressed[i][0])
+
+
+  sequence = []
+
+  while len(watch_data) != 0:
+    # We want to remove the line so we dont have to iterate trough everything again
+    line = copy_acc.pop(0)
+    if line == ['']:
+      continue 
+
+    time, acc_x, acc_y, acc_z = line[0], line[1], line[2], line[3]
+
+    current_time = int(time)
+
+    if current_time < start:
+      continue 
+    if current_time >= end:
+      break 
+
+    sequence.append([float(acc_x), float(acc_y), float(acc_z)])
+    predictions.append(key)
+    sequences.append(sequence)
+
+    
 
 
 if __name__ == "__main__":
