@@ -106,11 +106,12 @@ def map_sequences(keys_pressed,keys_released,watch_data):
     #watch_should be in form [ [ x, y, z, timestamp] ...]
     #keys pressed released in form [ [ timestamp, key, location]]
     sequences = []
+    predictions = []
 
     for i in range(len(keys_pressed)):
         start = int(keys_released[i][0])
         end = int(keys_pressed[i][0])
-        key = keys_pressed[i][2]
+        key = keys_pressed[i][1]
 
         sequence = []
 
@@ -131,6 +132,7 @@ def map_sequences(keys_pressed,keys_released,watch_data):
 
             sequence.append([float(acc_x), float(acc_y), float(acc_z)])
         sequences.append(sequence)
+        predictions.append(key)
     return sequences
 
 def padding(sequences):
@@ -148,6 +150,15 @@ def padding(sequences):
     np_sequences = np.stack(padded_sequences)
 
     print(np_sequences.shape)
+
+def predict(batch_of_10):
+  pickled = open("/loc/to/weights.pickle","r")
+  rfc = pickle.loads(pickled)
+  
+  prediction = rfc.predict(batch_of_10)
+  if prediction >= 0.2:
+    return True
+  return False   
 
     
 
