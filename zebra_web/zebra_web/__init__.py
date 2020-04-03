@@ -26,14 +26,18 @@ def login():
 
 @app.route('/main')
 def main():
-    if request.method == 'POST':
-       #mouse data sent over
-       #Do Something Here 
-       data=request.json
+    return render_template('main.html')
 
-       
-    else:
-        return render_template('main.html')
+
+'''
+data at the moment is a list of items in format as
+{ "timestamp": timestamp, "action": "keypress", "key": event.key, "location": "right" }
+'''
+@app.route('/watch_data', methods = ['GET', 'POST'])
+def watch_data():
+    if request.method == 'POST':
+       data=request.json
+    
 
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
@@ -47,6 +51,8 @@ def get_messages():
     data = request.get_json()
     watch_data.append(data)
     return jsonify({'watch:': watch_data})
+
+
 
 if __name__ == "__main__":
     app.run()

@@ -40,53 +40,133 @@
         </div>
 
         <div class="jumbotron">
+            <h1 id="demo">Welcome to our DemoA :)</h1>
+
             <div>
-                <h1> Type Your Message: </h1>
-                <input type="text" placeholder="Your Message..." id="textbox" />
+                <h4 id="message" stye=“margin-top: 200px;”> Please Continue to type for 20 seconds Straight</h4>
+                <textarea id="textarea" rows="4" cols="100"> </textarea>
             </div>
+
             <script>
+                //starting typing
+                var typing = false
+                let typingTimer = null;                //timer identifier
+                var keystrokes = []
+                const textarea = document.getElementById("textarea")
+                const message = document.getElementById("message")
+                var typingTime;
+                var donetypingdate
+                var success = false
 
-                document.getElementById('textbox').style.height = "36px";
-                document.getElementById('textbox').style.width = "500px";
+                //key up logging
+                textarea.addEventListener('keyup', function (event) {
 
-                document.body.addEventListener('keyup', function (event) {
-                    var timestamp = Date.now();
-                    if ('Escape12345`~!@#$%qwertQWERTasdfgASDFGzxcvbZXCVBCapsLock'.includes(event.key)) {
-                        var keyuptext = timestamp + ", keyup, " + event.key + ", left";
-                    } else if ('ShiftControlAltMeta'.includes(event.key) && event.location == 1) {
-                        var keyuptext = timestamp + ", keyup, " + event.key + ", left";
-                    } else if ('ShiftControlAltMeta'.includes(event.key) && event.location == 2) {
-                        var keyuptext = keypresstext = timestamp + ", keyup, " + event.key + ", right";
-                    } else if (' '.includes(event.key)) {
-                        var keyuptext = timestamp + ", keyup, Space" + ", center";
+                    if (success) {
+                        //if keystrokes already sent to server for testing, do nothing
                     } else {
-                        var keyuptext = timestamp + ", keyup, " + event.key + ", right";
-                    }
 
-                    console.log(keyuptext);
-                    document.getElementById('timestamp').prepend(timestamp+"\n");
-                    document.getElementById('keyaction').prepend("keyup\n");
-                    document.getElementById('key').innerHTML = event.key + "<br>" + document.getElementById('key').innerHTML;
+                        clearTimeout(typingTimer);
+
+                        // Make a new timeout set to go off in 1000ms (1 second)
+                        typingTimer = setTimeout(function () {
+
+                            typingTime = (new Date() - typingdate) / 1000
+
+                            if (typingTime < 20) {
+                                typing = false
+                                message.innerHTML = "Please type for 20 consecutive seconds, You typed for " + typingTime + " seconds."
+                                textarea.value = ""
+                                console.log(typingTime)
+                                keystrokes = []
+                            } else {
+                                message.innerHTML = "Success, Analyzing Keystrokes..."
+                                console.log(typingTime)
+                                success = true;
+                                //Send keystrokes to server for processissing 
+                                var JsonKeystrokes = JSON.stringify(keystrokes);
+                                $.ajax({
+                                    type: "POST",
+                                    url: "/watch_data",
+                                    contentType: "application/json;charset=UTF-8",
+                                    dataType: 'json',
+                                    data: JsonKeystrokes
+                                }).done(function (data) {
+                                    //success, fires when the ajax call is complete
+                                }).fail(function (err) {
+                                });
+                            }
+                        }, 1000);
+
+                        var timestamp = Date.now();
+                        var section = "";
+                        if ('Escape12345`~!@#$%qwertQWERTasdfgASDFGzxcvbZXCVBCapsLock'.includes(event.key)) {
+                            // var keyuptext = timestamp + ", keyup, " + event.key + ", left";
+                            keystrokes.push({ "timestamp": timestamp, "action": "keyup", "key": event.key, "location": "left" });
+                            section = "left";
+                        } else if ('ShiftControlAltMeta'.includes(event.key) && event.location == 1) {
+                            // var keyuptext = timestamp + ", keyup, " + event.key + ", left";
+                            keystrokes.push({ "timestamp": timestamp, "action": "keyup", "key": event.key, "location": "left" });
+                            section = "left";
+                        } else if ('ShiftControlAltMeta'.includes(event.key) && event.location == 2) {
+                            // var keyuptext = keypresstext = timestamp + ", keyup, " + event.key + ", right";
+                            keystrokes.push({ "timestamp": timestamp, "action": "keyup", "key": event.key, "location": "right" });
+                            section = "right";
+                        } else if (' '.includes(event.key)) {
+                            // var keyuptext = timestamp + ", keyup, Space" + ", center";
+                            keystrokes.push({ "timestamp": timestamp, "action": "keyup", "key": "space", "location": "center" });
+                            section = "center";
+                        } else {
+                            // var keyuptext = timestamp + ", keyup, " + event.key + ", right";
+                            keystrokes.push({ "timestamp": timestamp, "action": "keyup", "key": event.key, "location": "right" });
+                            section = "right";
+                        }
+                        
+                        document.getElementById('timestamp').prepend(timestamp + "\n");
+                        document.getElementById('keyaction').prepend("keyup\n");
+                        document.getElementById('section').prepend(section + "\n");
+                        document.getElementById('key').innerHTML = event.key + "<br>" + document.getElementById('key').innerHTML;
+                    }
                 });
 
-                document.body.addEventListener('keypress', function (event) {
-                    var timestamp = Date.now();
-                    if ('Escape12345`~!@#$%qwertQWERTasdfgASDFGzxcvbZXCVBCapsLock'.includes(event.key)) {
-                        var keypresstext = timestamp + ", keypress, " + event.key + ", left";
-                    } else if ('ShiftControlAltMeta'.includes(event.key) && event.location == 1) {
-                        var keypresstext = timestamp + ", keypress, " + event.key + ", left";
-                    } else if ('ShiftControlAltMeta'.includes(event.key) && event.location == 2) {
-                        var keypresstext = timestamp + ", keypress, " + event.key + ", right";
-                    } else if (' '.includes(event.key)) {
-                        var keypresstext = timestamp + ", keypress, Space" + ", center";
+                textarea.addEventListener('keypress', function (event) {
+                    if (success) {
+                        //if keystrokes already sent to server for testing, do nothing
                     } else {
-                        var keypresstext = timestamp + ", keypress, " + event.key + ", right";
-                    }
+                        if (typing == false) {
+                            typing = true
+                            message.innerHTML = "Typing..."
+                            typingdate = new Date()
+                        }
 
-                    console.log(keypresstext);
-                    document.getElementById('timestamp').prepend(timestamp+"\n");
-                    document.getElementById('keyaction').prepend("keypress\n");
-                    document.getElementById('key').innerHTML = event.key + "<br>" + document.getElementById('key').innerHTML;
+                        var timestamp = Date.now();
+                        var section = "";
+                        if ('Escape12345`~!@#$%qwertQWERTasdfgASDFGzxcvbZXCVBCapsLock'.includes(event.key)) {
+                            // var keypresstext = timestamp + ", keypress, " + event.key + ", left";
+                            keystrokes.push({ "timestamp": timestamp, "action": "keypress", "key": event.key, "location": "left" });
+                            section = "left";
+                        } else if ('ShiftControlAltMeta'.includes(event.key) && event.location == 1) {
+                            // var keypresstext = timestamp + ", keypress, " + event.key + ", left";
+                            keystrokes.push({ "timestamp": timestamp, "action": "keypress", "key": event.key, "location": "left" })
+                            section = "left";
+                        } else if ('ShiftControlAltMeta'.includes(event.key) && event.location == 2) {
+                            // var keypresstext = timestamp + ", keypress, " + event.key + ", right";
+                            keystrokes.push({ "timestamp": timestamp, "action": "keypress", "key": event.key, "location": "right" })
+                            section = "right";
+                        } else if (' '.includes(event.key)) {
+                            // var keypresstext = timestamp + ", keypress, Space" + ", center";
+                            keystrokes.push({ "timestamp": timestamp, "action": "keypress", "key": "Space", "location": "center" })
+                            section = "center";
+                        } else {
+                            // var keypresstext = timestamp + ", keypress, " + event.key + ", right";
+                            keystrokes.push({ "timestamp": timestamp, "action": "keypress", "key": event.key, "location": "right" })
+                            section = "right";
+                        }
+
+                        document.getElementById('timestamp').prepend(timestamp + "\n");
+                        document.getElementById('keyaction').prepend("keypress\n");
+                        document.getElementById('section').prepend(section + "\n");
+                        document.getElementById('key').innerHTML = event.key + "<br>" + document.getElementById('key').innerHTML;
+                    }
 
                 });
             </script>
@@ -104,7 +184,7 @@
                         <p> Key </p>
                     </div>
                     <div class="col-md-1">
-                        <p> </p>
+                        <p> Section</p>
                     </div>
                     <div class="col-md-2">
                         <p> Predicted key </p>
@@ -121,7 +201,7 @@
                         <p id="key"> </p>
                     </div>
                     <div class="col-md-1">
-                        <p> </p>
+                        <p id="section"> </p>
                     </div>
                     <div class="col-md-2">
                         <p id="predicted"></p>
@@ -130,8 +210,6 @@
             </div>
 
         </div>
-
-
 </body>
 
 </html>
