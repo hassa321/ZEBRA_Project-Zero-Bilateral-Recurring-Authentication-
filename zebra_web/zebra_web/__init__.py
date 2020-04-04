@@ -15,8 +15,8 @@ watch_data = []
 errors = []
 
 authenticate = []
-row = {"Key": "test", "Prediction": "test", "Authenticated": "test"}
-authenticate.append(row)
+#row = {"Key": "test", "Prediction": "test", "Authenticated": "test"}
+#authenticate.append(row)
 
 
 keys_mapped = {'1': 1, '2': 1, '3': 1, '!': 1, '@': 1, '#': 1, '4': 2, '5': 2,
