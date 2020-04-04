@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Form template from https://www.w3docs.com/tools/editor/5910 -->
+        <title>Display Predictions</title>
+        <link rel="stylesheet" href="/static/css/table.css">
+    </head>
+    <body>
+        <div class="preds">
+
+            <table id="table">
+                    <thead>
+                            <tr>
+                                {% for col in colnames%}
+                                <th>{{ col }}</th>
+                                {% endfor %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for pred in preds%}
+                            <tr>
+                                {% for col in colnames %}
+                                <td>{{ pred[col]}}</td>
+                                {% endfor %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+            </table>
+        </div>
+    </body>
+</html>
