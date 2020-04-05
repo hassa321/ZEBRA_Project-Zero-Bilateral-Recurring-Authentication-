@@ -130,7 +130,7 @@ class InterfaceController: WKInterfaceController {
         
             let newTodoItem = WatchData(Ax: deviceMotion.userAcceleration.x, Ay: deviceMotion.userAcceleration.y, Az: deviceMotion.userAcceleration.z, TimeStamp: timestamp)
             
-            var request = URLRequest(url: URL(string: "http://ec2-3-89-187-162.compute-1.amazonaws.com/watch")!)
+            var request = URLRequest(url: URL(string: "http://dev3.horizon.tom.srl/watch")!)
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
             request.httpMethod = "POST"
@@ -156,44 +156,6 @@ class InterfaceController: WKInterfaceController {
             task.resume()
             
             
-         //TESTING POST REQUESTS
-         /*
-              // Prepare URL
-              var request = URLRequest(url: URL(string: "http://localhost:8000")!)
-              request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-
-              request.httpMethod = "POST"
-               
-              // Set HTTP Request Header
-              //request.setValue("application/json", forHTTPHeaderField: "Accept")
-              //request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        
-              let newTodoItem = ToDoResponseModel(Ax: deviceMotion.userAcceleration.x, Ay: deviceMotion.userAcceleration.y, Az: deviceMotion.userAcceleration.z, Gx: deviceMotion.rotationRate.x, Gy: deviceMotion.rotationRate.y, Gz: deviceMotion.rotationRate.z, TimeStamp: timestamp)
-        
-              let jsonData = try? JSONEncoder().encode(newTodoItem)
-        
-              request.httpBody = jsonData
-
-              // Perform HTTP Request
-              let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-                      
-                      // Check for Error
-                      if let error = error {
-                          print("Error took place \(error)")
-                          return
-                      }
-               
-                      // Convert HTTP Response Data to a String
-                      if let data = data, let dataString = String(data: data, encoding: .utf8) {
-                          print("Response data string:\n \(dataString)")
-                      }
-              }
-              task.resume()
-              
-         
-        //END TESTING POST REQUESTS
-        */
                  os_log("Motion: %@, %@, %@, %@",
                  String(timestamp),
                  String(deviceMotion.userAcceleration.x),
@@ -201,28 +163,11 @@ class InterfaceController: WKInterfaceController {
                  String(deviceMotion.userAcceleration.z))
          
         
-        /*
-          print(String(timestamp),
-          String(deviceMotion.userAcceleration.x),
-          String(deviceMotion.userAcceleration.y),
-          String(deviceMotion.userAcceleration.z),
-          String(deviceMotion.rotationRate.x),
-          String(deviceMotion.rotationRate.y),
-          String(deviceMotion.rotationRate.z));
-        */
           updateLabels();
         
-        
-          
-          //updateMetrics();
       }
 
-      // MARK: Data and Delegate Management
-      
-      /*func updateMetrics() {
-          accelerationString = accelerationStr
-          gyroscopeString = gyroscopeStr
-      }*/
+
     
     
     func postData() {
