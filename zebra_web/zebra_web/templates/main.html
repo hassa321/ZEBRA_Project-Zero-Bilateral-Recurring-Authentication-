@@ -62,13 +62,11 @@
                 textarea.addEventListener('keyup', function (event) {
 
                         var timestamp = Date.now();
-                        var section = "";
                          keystrokes = {'timestamp': timestamp,'action':'keyup','key':event.key};
                         //keystroke = {timestamp: "please work", action: "we are tired", key: "HELP!"};
                         //keystroke = {"timestamp": timestamp, "action": event, "key": event.key};
                         document.getElementById('timestamp').prepend(timestamp + "\n");
                         document.getElementById('keyaction').prepend("keyup\n");
-                        document.getElementById('section').prepend(section + "\n");
                         document.getElementById('key').innerHTML = event.key + "<br>" + document.getElementById('key').innerHTML;
 
                         var JsonKeys = JSON.stringify(keystrokes);
@@ -92,12 +90,10 @@
 
                 textarea.addEventListener('keypress', function (event) {
                         var timestamp = Date.now();
-                        var section = "";
                         keystrokes = {'timestamp': timestamp, 'action': 'keypress', 'key': event.key};
                         // keystroke = {timestamp: "please work", action: "we are tired", key: "HELP!"};
                         document.getElementById('timestamp').prepend(timestamp + "\n");
                         document.getElementById('keyaction').prepend("keypress\n");
-                        document.getElementById('section').prepend(section + "\n");
                         document.getElementById('key').innerHTML = event.key + "<br>" + document.getElementById('key').innerHTML;
 
                         var JsonKeys = JSON.stringify(keystrokes);
@@ -130,12 +126,6 @@
                     <div class="col-md-2">
                         <p> Key </p>
                     </div>
-                    <div class="col-md-1">
-                        <p> Section</p>
-                    </div>
-                    <div class="col-md-2">
-                        <p> Predicted key </p>
-                    </div>
                 </div>
                 <div class="row">
                     <div class="col-md-2">
@@ -146,12 +136,6 @@
                     </div>
                     <div class="col-md-2">
                         <p id="key"> </p>
-                    </div>
-                    <div class="col-md-1">
-                        <p id="section"> </p>
-                    </div>
-                    <div class="col-md-2">
-                        <p id="predicted"></p>
                     </div>
                 </div>
             </div>
