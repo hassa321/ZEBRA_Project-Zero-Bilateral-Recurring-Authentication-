@@ -40,58 +40,81 @@
         </div>
 
         <div class="jumbotron">
+            <h1 id="demo">Welcome to our DemoA :)</h1>
+
             <div>
-                <h1> Type Your Message: </h1>
-                <input type="text" placeholder="Your Message..." id="textbox" />
+                <h4 id="message" stye=“margin-top: 200px;”> Please type something...</h4>
+                <textarea id="textarea" rows="4" cols="100"> </textarea>
             </div>
+
             <script>
+                //starting typing
+                var typing = false;
+                let typingTimer = null;                //timer identifier
+                var keystrokes = [];
+                const textarea = document.getElementById("textarea")
+                const message = document.getElementById("message")
+                var typingTime;
+                var donetypingdate
+                var success = false
 
-                document.getElementById('textbox').style.height = "36px";
-                document.getElementById('textbox').style.width = "500px";
+                //key up logging
+                textarea.addEventListener('keyup', function (event) {
 
-                document.body.addEventListener('keyup', function (event) {
-                    var timestamp = Date.now();
-                    if ('Escape12345`~!@#$%qwertQWERTasdfgASDFGzxcvbZXCVBCapsLock'.includes(event.key)) {
-                        var keyuptext = timestamp + ", keyup, " + event.key + ", left";
-                    } else if ('ShiftControlAltMeta'.includes(event.key) && event.location == 1) {
-                        var keyuptext = timestamp + ", keyup, " + event.key + ", left";
-                    } else if ('ShiftControlAltMeta'.includes(event.key) && event.location == 2) {
-                        var keyuptext = keypresstext = timestamp + ", keyup, " + event.key + ", right";
-                    } else if (' '.includes(event.key)) {
-                        var keyuptext = timestamp + ", keyup, Space" + ", center";
-                    } else {
-                        var keyuptext = timestamp + ", keyup, " + event.key + ", right";
-                    }
+                        var timestamp = Date.now();
+                         keystrokes = {'timestamp': timestamp,'action':'keyup','key':event.key};
+                        //keystroke = {timestamp: "please work", action: "we are tired", key: "HELP!"};
+                        //keystroke = {"timestamp": timestamp, "action": event, "key": event.key};
+                        document.getElementById('timestamp').prepend(timestamp + "\n");
+                        document.getElementById('keyaction').prepend("keyup\n");
+                        document.getElementById('key').innerHTML = event.key + "<br>" + document.getElementById('key').innerHTML;
 
-                    console.log(keyuptext);
-                    document.getElementById('timestamp').prepend(timestamp+"\n");
-                    document.getElementById('keyaction').prepend("keyup\n");
-                    document.getElementById('key').innerHTML = event.key + "<br>" + document.getElementById('key').innerHTML;
+                        var JsonKeys = JSON.stringify(keystrokes);
+                        console.log(JsonKeys);
+                              $.ajax({
+                                    type: "POST",
+                                    url: "/keyboard",
+                                    contentType: "application/json;charset=UTF-8",
+                                    dataType: "json",
+                                    data: JsonKeys,
+                              }).done(function (data) {
+                                      console.log(data);
+                                      console.log("successed, keyup");
+                                        //success, fires when the ajax call is complete
+                              }).fail(function (err) {
+                                      console.log(err);
+                                      console.log("failed keyup");
+                        });
+
                 });
 
-                document.body.addEventListener('keypress', function (event) {
-                    var timestamp = Date.now();
-                    if ('Escape12345`~!@#$%qwertQWERTasdfgASDFGzxcvbZXCVBCapsLock'.includes(event.key)) {
-                        var keypresstext = timestamp + ", keypress, " + event.key + ", left";
-                    } else if ('ShiftControlAltMeta'.includes(event.key) && event.location == 1) {
-                        var keypresstext = timestamp + ", keypress, " + event.key + ", left";
-                    } else if ('ShiftControlAltMeta'.includes(event.key) && event.location == 2) {
-                        var keypresstext = timestamp + ", keypress, " + event.key + ", right";
-                    } else if (' '.includes(event.key)) {
-                        var keypresstext = timestamp + ", keypress, Space" + ", center";
-                    } else {
-                        var keypresstext = timestamp + ", keypress, " + event.key + ", right";
-                    }
+                textarea.addEventListener('keypress', function (event) {
+                        var timestamp = Date.now();
+                        keystrokes = {'timestamp': timestamp, 'action': 'keypress', 'key': event.key};
+                        // keystroke = {timestamp: "please work", action: "we are tired", key: "HELP!"};
+                        document.getElementById('timestamp').prepend(timestamp + "\n");
+                        document.getElementById('keyaction').prepend("keypress\n");
+                        document.getElementById('key').innerHTML = event.key + "<br>" + document.getElementById('key').innerHTML;
 
-                    console.log(keypresstext);
-                    document.getElementById('timestamp').prepend(timestamp+"\n");
-                    document.getElementById('keyaction').prepend("keypress\n");
-                    document.getElementById('key').innerHTML = event.key + "<br>" + document.getElementById('key').innerHTML;
-
+                        var JsonKeys = JSON.stringify(keystrokes);
+                        console.log(JsonKeys);
+                              $.ajax({
+                                    type:"POST",
+                                    url: "/keyboard",
+                                    contentType: "application/json;charset=UTF-8",
+                                    dataType: "json",
+                                    data: JsonKeys,
+                              }).done(function (data) {
+                                      console.log(data);
+                                      console.log("successed, keypress");
+                                        //success, fires when the ajax call is complete
+                              }).fail(function (err) {
+                                      console.log(err);
+                                      console.log("failed keypress");
+                        });
                 });
             </script>
             <br>
-
             <div class="container">
                 <div class="row">
                     <div class="col-md-2">
@@ -102,12 +125,6 @@
                     </div>
                     <div class="col-md-2">
                         <p> Key </p>
-                    </div>
-                    <div class="col-md-1">
-                        <p> </p>
-                    </div>
-                    <div class="col-md-2">
-                        <p> Predicted key </p>
                     </div>
                 </div>
                 <div class="row">
@@ -120,18 +137,10 @@
                     <div class="col-md-2">
                         <p id="key"> </p>
                     </div>
-                    <div class="col-md-1">
-                        <p> </p>
-                    </div>
-                    <div class="col-md-2">
-                        <p id="predicted"></p>
-                    </div>
                 </div>
             </div>
 
         </div>
-
-
 </body>
 
 </html>
