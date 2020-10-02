@@ -13,13 +13,13 @@
         clearTimeout(timeout);
         timeout = setTimeout(function () {
             document.getElementById("logout").click();
-        }, 10000);
+        }, 60000);
     });
     window.addEventListener('mousemove', function (e) {
         clearTimeout(timeout);
         timeout = setTimeout(function () {
             document.getElementById("logout").click();
-        }, 10000);
+        }, 60000);
     });
 
 </script>
@@ -40,7 +40,105 @@
         </div>
 
         <div class="jumbotron">
-            <h1>Hi :)</h1>
+            <h1 id="demo">Welcome to our DemoA :)</h1>
+
+            <div>
+                <h4 id="message" stye=“margin-top: 200px;”> Please type something...</h4>
+                <textarea id="textarea" rows="4" cols="100"> </textarea>
+            </div>
+
+            <script>
+                //starting typing
+                var typing = false;
+                let typingTimer = null;                //timer identifier
+                var keystrokes = [];
+                const textarea = document.getElementById("textarea")
+                const message = document.getElementById("message")
+                var typingTime;
+                var donetypingdate
+                var success = false
+
+                //key up logging
+                textarea.addEventListener('keyup', function (event) {
+
+                        var timestamp = Date.now();
+                         keystrokes = {'timestamp': timestamp,'action':'keyup','key':event.key};
+                        //keystroke = {timestamp: "please work", action: "we are tired", key: "HELP!"};
+                        //keystroke = {"timestamp": timestamp, "action": event, "key": event.key};
+                        document.getElementById('timestamp').prepend(timestamp + "\n");
+                        document.getElementById('keyaction').prepend("keyup\n");
+                        document.getElementById('key').innerHTML = event.key + "<br>" + document.getElementById('key').innerHTML;
+
+                        var JsonKeys = JSON.stringify(keystrokes);
+                        console.log(JsonKeys);
+                              $.ajax({
+                                    type: "POST",
+                                    url: "/keyboard",
+                                    contentType: "application/json;charset=UTF-8",
+                                    dataType: "json",
+                                    data: JsonKeys,
+                              }).done(function (data) {
+                                      console.log(data);
+                                      console.log("successed, keyup");
+                                        //success, fires when the ajax call is complete
+                              }).fail(function (err) {
+                                      console.log(err);
+                                      console.log("failed keyup");
+                        });
+
+                });
+
+                textarea.addEventListener('keypress', function (event) {
+                        var timestamp = Date.now();
+                        keystrokes = {'timestamp': timestamp, 'action': 'keypress', 'key': event.key};
+                        // keystroke = {timestamp: "please work", action: "we are tired", key: "HELP!"};
+                        document.getElementById('timestamp').prepend(timestamp + "\n");
+                        document.getElementById('keyaction').prepend("keypress\n");
+                        document.getElementById('key').innerHTML = event.key + "<br>" + document.getElementById('key').innerHTML;
+
+                        var JsonKeys = JSON.stringify(keystrokes);
+                        console.log(JsonKeys);
+                              $.ajax({
+                                    type:"POST",
+                                    url: "/keyboard",
+                                    contentType: "application/json;charset=UTF-8",
+                                    dataType: "json",
+                                    data: JsonKeys,
+                              }).done(function (data) {
+                                      console.log(data);
+                                      console.log("successed, keypress");
+                                        //success, fires when the ajax call is complete
+                              }).fail(function (err) {
+                                      console.log(err);
+                                      console.log("failed keypress");
+                        });
+                });
+            </script>
+            <br>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2">
+                        <p> Timestamp </p>
+                    </div>
+                    <div class="col-md-2">
+                        <p> Key action </p>
+                    </div>
+                    <div class="col-md-2">
+                        <p> Key </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <p id="timestamp"> </p>
+                    </div>
+                    <div class="col-md-2">
+                        <p id="keyaction"> </p>
+                    </div>
+                    <div class="col-md-2">
+                        <p id="key"> </p>
+                    </div>
+                </div>
+            </div>
 
         </div>
 </body>

@@ -1,10 +1,14 @@
 # Csc490_Zebra_Project
+
+=======
 Zero Effort Continuous Authentication Implementation
 Abstract
  	This is an implementation of ZEBRA, where when paired with an Apple watch, allows for continuous authentication of web apps. This adds an additional layer of security, beyond the initial login authentication. In the event that a user forgets to log off the application and steps away, the web page will automatically log the user off. Or if another user tries to use the web page under another user's credentials the session will be logged off. By training a neural net model we are able to analyze keystrokes to further verify whether the user interacting with the system is the same one that logged in. The model is fed information about the user such as their typing behaviours along with their hand movements which is retrieved from the Apple watch. The implementation we provide can be used by many web applications, especially those that wish to add another layer of security feature due to the sensitivity of their data. 
 
-## References
----
+
+## Locally Run
+```
+cd zebra_web
 
 
 #### Flask Installation
@@ -30,17 +34,49 @@ Abstract
 
 
 
+
+### References
 #### MouseData Events Webpage Extraction tutorials and resources 
 1. https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/43796.pdf
 2. https://developers.google.com/maps/documentation/javascript/events
+
 #### AJAX Server Calls resources 
 1. https://developer.mozilla.org/en-US/docs/Web/Guide/AJAX/Getting_Started
 2. https://plainjs.com/javascript/ajax/send-ajax-get-and-post-requests-47/
 
+#### Timeout
+1. https://schier.co/blog/wait-for-user-to-stop-typing-using-javascript
+
+
+## Week 3 (Feb 21st, 2020)
+### User Stories
+* __Watch App__ - Determining the type of user activity (_SCRAPPED_)
+
+### References
+#### User's Activity Type with Core Motion
+1. https://developer.apple.com/documentation/coremotion/cmmotionactivitymanager
+
+## Week 4 (Feb 28th, 2020)
+### User Stories
+* __Training Machine Learning Model__ - Setting up
+* __Training Machine Learning Model__ - Data Processing Functions (padding and sequencing)
+
+
+### References
+#### Research for classifier
+1. https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html
+2. https://www.datacamp.com/community/tutorials/random-forests-classifier-python
+
+#### Additional Research papers
+1. https://arxiv.org/pdf/1505.05779.pdf
+2. https://chrisalbon.com/machine_learning/trees_and_forests/random_forest_classifier_example/
+3. https://synrg.csl.illinois.edu/papers/mole.pdf
 
 
 #### Flash Message
 1. https://flask.palletsprojects.com/en/1.1.x/patterns/flashing/
 2. https://pythonise.com/series/learning-flask/flask-message-flashing
+
 #### Mouse and Keyboard timeout
 1. https://flask.palletsprojects.com/en/1.1.x/patterns/flashing/
+
